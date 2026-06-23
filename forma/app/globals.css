@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+@theme {
+  --color-forma-black: #1A1814;
+  --color-forma-white: #F5F0E8;
+  --color-forma-cream: #EDE8DC;
+  --color-forma-tan: #C4B89A;
+  --color-forma-brown: #8C7B5E;
+  --color-forma-gray-mid: #9A9488;
+  --color-forma-gray-light: #E2DDD4;
+  --animate-marquee: marquee 28s linear infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@theme inline {
+  --font-sans: var(--font-dm-sans);
+  --font-serif: var(--font-dm-serif);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-forma-white);
+  color: var(--color-forma-black);
+  font-family: var(--font-sans);
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Compensar navbar fija */
+section {
+  scroll-margin-top: 80px;
+}
