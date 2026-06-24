@@ -77,14 +77,14 @@ export default function Contacto() {
   return (
     <section
       id="contacto"
-      className="scroll-mt-16 border-t border-forma-gray-light bg-forma-white px-6 py-24 sm:px-10 lg:px-20"
+      className="scroll-mt-16 border-t border-forma-gray-light bg-forma-white px-6 py-24 sm:px-10 lg:px-16"
     >
       <motion.div
         ref={ref}
         variants={containerVariants}
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
-        className="max-w-screen-xl mx-auto"
+        className="max-w-[1440px] mx-auto"
       >
         <motion.p
           variants={itemVariants}

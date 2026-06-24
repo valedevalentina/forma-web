@@ -9,8 +9,8 @@ const CONTACT_DETAILS = ["+598 99 123 456", "contacto@constructoraforma.com", "M
 
 export default function Footer() {
   return (
-    <footer className="bg-forma-black px-6 py-12 sm:px-10 lg:px-20">
-      <div className="max-w-screen-xl mx-auto">
+    <footer className="bg-forma-black px-6 py-12 sm:px-10 lg:px-16">
+      <div className="max-w-[1440px] mx-auto">
         <div className="flex flex-wrap items-start justify-between gap-8 border-b border-white/10 pb-10">
           <div className="flex-shrink-0">
             <p className="font-serif text-base text-white">FORMA</p>

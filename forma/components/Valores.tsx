@@ -36,7 +36,7 @@ export default function Valores() {
         variants={containerVariants}
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
-        className="max-w-screen-xl mx-auto text-center"
+        className="max-w-[1440px] mx-auto text-center"
       >
         <motion.p
           variants={itemVariants}

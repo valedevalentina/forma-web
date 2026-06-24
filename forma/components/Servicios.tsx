@@ -53,13 +53,13 @@ export default function Servicios() {
       };
 
   return (
-    <section id="servicios" className="scroll-mt-16 bg-forma-cream px-6 py-24 sm:px-10 lg:px-20">
+    <section id="servicios" className="scroll-mt-16 bg-forma-cream px-6 py-24 sm:px-10 lg:px-16">
       <motion.div
         ref={ref}
         variants={containerVariants}
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
-        className="mx-auto max-w-screen-xl"
+        className="mx-auto max-w-[1440px]"
       >
         <motion.p
           variants={itemVariants}

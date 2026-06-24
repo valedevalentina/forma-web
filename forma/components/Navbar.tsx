@@ -17,8 +17,8 @@ export default function Navbar() {
   const closeMobileMenu = () => setMobileOpen(false);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 h-16 border-b border-[#E0DCD6] bg-[#F5F2ED]">
-      <div className="mx-auto flex h-full w-full max-w-screen-xl items-center justify-between px-6 sm:px-10 lg:px-20">
+    <header className="fixed inset-x-0 top-0 z-50 h-16 border-b border-[#E0DCD6] bg-[#F5F2ED] px-8 sm:px-12 lg:px-16">
+      <div className="flex h-full w-full items-center justify-between">
         <a href="#" className="font-serif text-base text-forma-black">
           FORMA
         </a>
