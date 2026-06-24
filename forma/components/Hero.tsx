@@ -26,7 +26,7 @@ const STATS: Stat[] = [
 
 function StatCounter({ value, suffix = "", label }: Stat) {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const isInView = useInView(ref, { once: true, margin: "-60px" });
   const shouldReduceMotion = useReducedMotion();
 
   const count = useMotionValue(0);
@@ -48,12 +48,12 @@ function StatCounter({ value, suffix = "", label }: Stat) {
   }, [isInView, shouldReduceMotion, value, count]);
 
   return (
-    <div ref={ref} className="px-10 py-5 text-center">
-      <p className="font-serif text-3xl text-white">
+    <div ref={ref} className="px-12 py-5 text-center">
+      <p className="font-serif text-2xl text-white">
         {display}
         {suffix}
       </p>
-      <p className="mt-1 text-[10px] uppercase tracking-widest text-white/50">{label}</p>
+      <p className="mt-1 text-[10px] uppercase tracking-[0.15em] text-forma-tan">{label}</p>
     </div>
   );
 }
@@ -63,40 +63,38 @@ export default function Hero() {
   const y = useTransform(scrollY, [0, 600], [0, 200]);
 
   return (
-    <section className="relative h-screen overflow-hidden">
-      {/* TODO: reemplazar este div por <Image> con foto de obra */}
+    <section className="relative h-screen overflow-hidden bg-forma-black">
       <motion.div
         style={{ y }}
-        className="absolute inset-x-0 -top-[200px] -bottom-[200px] bg-[#2C2820]"
+        className="absolute inset-x-0 -top-[200px] -bottom-[200px] bg-forma-black"
       />
 
-      <div className="absolute inset-0 bg-black/30" />
-
-      <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
-        <p className="mb-6 text-[11px] uppercase tracking-[0.3em] text-white/70">
-          Constructora Residencial
+      <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center sm:px-10 lg:px-20">
+        <p className="mb-8 text-[10px] uppercase tracking-[0.2em] text-forma-tan">
+          Constructora Residencial · Desde 2008
         </p>
 
-        <h1 className="max-w-4xl font-serif text-6xl leading-none text-white lg:text-8xl">
-          Construimos espacios que perduran.
+        <h1 className="max-w-xl font-serif text-4xl font-normal leading-snug text-white">
+          Construimos espacios
+          <br />
+          que perduran.
         </h1>
 
-        <div className="my-8 h-16 w-px bg-white/40" />
+        <div className="my-10 h-px w-8 bg-forma-tan" />
 
-        <p className="mb-10 max-w-md text-sm font-light leading-relaxed text-white/75">
-          Diseñamos y edificamos hogares con precisión, materiales de primera y un compromiso
-          real con cada detalle. Tu proyecto, nuestro oficio.
+        <p className="mb-10 max-w-sm text-sm font-light leading-loose text-white/55">
+          Diseñamos y edificamos hogares con precisión y compromiso real.
         </p>
 
         <a
           href="#proyectos"
-          className="border-b border-white/30 pb-1 text-[11px] uppercase tracking-[0.2em] text-white/80 transition-colors hover:border-white hover:text-white"
+          className="border-b border-white/30 pb-1 text-[10px] uppercase tracking-[0.2em] text-white/60 transition-colors hover:text-white"
         >
-          Explorar proyectos ↓
+          Ver proyectos →
         </a>
       </div>
 
-      <div className="absolute inset-x-0 bottom-0 flex justify-center divide-x divide-white/20 bg-black/40 backdrop-blur-sm">
+      <div className="absolute inset-x-0 bottom-0 flex justify-center divide-x divide-white/10 border-t border-white/10">
         {STATS.map((stat) => (
           <StatCounter key={stat.label} {...stat} />
         ))}

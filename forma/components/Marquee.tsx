@@ -7,13 +7,16 @@ const MARQUEE_PARTS = [
   "Materiales de primera",
 ];
 
-function MarqueeRow() {
+function MarqueeContent() {
   return (
-    <div className="flex shrink-0 items-center gap-3 pr-3" aria-hidden="true">
+    <div
+      className="flex shrink-0 items-center gap-3 pr-3 text-[10px] uppercase tracking-[0.2em] text-forma-tan"
+      aria-hidden="true"
+    >
       {MARQUEE_PARTS.map((part, index) => (
         <span key={index} className="flex items-center gap-3">
-          <span className="text-[11px] uppercase tracking-widest text-forma-brown/60">{part}</span>
-          <span className="text-[11px] text-forma-tan/40">·</span>
+          <span>{part}</span>
+          <span>·</span>
         </span>
       ))}
     </div>
@@ -22,10 +25,10 @@ function MarqueeRow() {
 
 export default function Marquee() {
   return (
-    <div className="overflow-hidden border-y border-forma-gray-light bg-forma-cream py-4">
+    <div className="overflow-hidden border-y border-forma-gray-light bg-forma-cream px-6 py-3 sm:px-10 lg:px-20">
       <div className="flex w-max animate-marquee">
-        <MarqueeRow />
-        <MarqueeRow />
+        <MarqueeContent />
+        <MarqueeContent />
       </div>
     </div>
   );

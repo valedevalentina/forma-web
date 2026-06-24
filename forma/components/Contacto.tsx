@@ -28,19 +28,14 @@ const SERVICE_OPTIONS = ["Casa a medida", "Condominio", "Ampliación", "Remodela
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-const containerVariants: Variants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.1 } },
-};
+const fieldClasses =
+  "mb-7 w-full border-b border-forma-gray-light bg-transparent pb-2 text-sm text-forma-black placeholder:text-forma-gray-mid outline-none transition-colors focus:border-forma-black";
 
-const inputClasses =
-  "w-full rounded-sm border border-forma-tan bg-transparent px-4 py-3 font-sans text-sm text-forma-black placeholder:text-forma-gray-mid transition-colors focus:border-forma-brown focus:outline-none";
-
-const labelClasses = "mb-2 block text-[11px] uppercase tracking-widest text-forma-gray-mid";
+const labelClasses = "mb-2 block text-[10px] uppercase tracking-[0.15em] text-forma-tan";
 
 export default function Contacto() {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const isInView = useInView(ref, { once: true, margin: "-60px" });
   const shouldReduceMotion = useReducedMotion();
 
   const {
@@ -49,10 +44,17 @@ export default function Contacto() {
     formState: { errors },
   } = useForm<FormValues>();
 
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+  const containerVariants: Variants = {
+    hidden: {},
+    visible: { transition: { staggerChildren: 0.08 } },
   };
+
+  const itemVariants: Variants = shouldReduceMotion
+    ? { hidden: { opacity: 1, y: 0 }, visible: { opacity: 1, y: 0 } }
+    : {
+        hidden: { opacity: 0, y: 16 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } },
+      };
 
   const onSubmit = (data: FormValues) => {
     const mensaje = encodeURIComponent(
@@ -73,89 +75,101 @@ export default function Contacto() {
   };
 
   return (
-    <section id="contacto" className="scroll-mt-20 border-t border-forma-gray-light bg-forma-cream px-6 py-16 lg:px-16 lg:py-28">
+    <section
+      id="contacto"
+      className="scroll-mt-16 border-t border-forma-gray-light bg-forma-white px-6 py-24 sm:px-10 lg:px-20"
+    >
       <motion.div
         ref={ref}
         variants={containerVariants}
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
-        className="grid grid-cols-1 gap-20 lg:grid-cols-2"
+        className="max-w-screen-xl mx-auto"
       >
-        <div>
-          <motion.p
-            variants={itemVariants}
-            className="text-[11px] uppercase tracking-widest text-forma-gray-mid"
-          >
-            Contacto
-          </motion.p>
+        <motion.p
+          variants={itemVariants}
+          className="text-[10px] uppercase tracking-[0.2em] text-forma-tan"
+        >
+          Contacto
+        </motion.p>
 
-          <motion.h2 variants={itemVariants} className="mt-4 font-serif text-4xl text-forma-black">
-            Hablemos de tu <span className="italic text-forma-gray-mid">proyecto.</span>
-          </motion.h2>
+        <motion.h2
+          variants={itemVariants}
+          className="mb-16 mt-4 font-serif text-2xl font-normal text-forma-black"
+        >
+          Hablemos de tu proyecto.
+        </motion.h2>
 
-          <motion.p variants={itemVariants} className="mt-4 font-light text-forma-gray-mid">
-            Respondemos todas las consultas dentro de las 24 horas. Sin compromiso y sin costo.
-          </motion.p>
+        <div className="grid grid-cols-1 gap-16 lg:grid-cols-2">
+          <div>
+            <motion.p
+              variants={itemVariants}
+              className="mb-10 text-sm font-light leading-loose text-forma-gray-mid"
+            >
+              Respondemos todas las consultas dentro de las 24 horas. Sin compromiso y sin costo.
+            </motion.p>
 
-          <motion.div variants={itemVariants} className="mt-10 flex flex-col gap-5">
-            {CONTACT_ITEMS.map(({ icon: Icon, text }) => (
-              <div key={text} className="flex items-center gap-4">
-                <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-sm border border-forma-gray-light">
-                  <Icon size={16} className="text-forma-brown" />
+            <motion.div variants={itemVariants}>
+              {CONTACT_ITEMS.map(({ icon: Icon, text }) => (
+                <div key={text} className="mb-4 flex items-center gap-3">
+                  <Icon size={14} className="text-forma-tan" />
+                  <p className="text-sm text-forma-black">{text}</p>
                 </div>
-                <p className="text-sm text-forma-gray-mid">{text}</p>
-              </div>
-            ))}
-          </motion.div>
-        </div>
-
-        <motion.form variants={itemVariants} onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label htmlFor="nombre" className={labelClasses}>
-                Nombre
-              </label>
-              <input
-                id="nombre"
-                type="text"
-                className={inputClasses}
-                {...register("nombre", { required: "El nombre es obligatorio" })}
-              />
-              {errors.nombre && <p className="mt-1 text-xs text-red-400">{errors.nombre.message}</p>}
-            </div>
-
-            <div>
-              <label htmlFor="telefono" className={labelClasses}>
-                Teléfono
-              </label>
-              <input id="telefono" type="tel" className={inputClasses} {...register("telefono")} />
-            </div>
+              ))}
+            </motion.div>
           </div>
 
-          <div>
+          <motion.form variants={itemVariants} onSubmit={handleSubmit(onSubmit)}>
+            <div className="grid grid-cols-2 gap-8">
+              <div>
+                <label htmlFor="nombre" className={labelClasses}>
+                  Nombre
+                </label>
+                <input
+                  id="nombre"
+                  type="text"
+                  className={fieldClasses}
+                  {...register("nombre", { required: "El nombre es obligatorio" })}
+                />
+                {errors.nombre && (
+                  <p className="-mt-5 mb-5 text-xs text-red-500">{errors.nombre.message}</p>
+                )}
+              </div>
+
+              <div>
+                <label htmlFor="telefono" className={labelClasses}>
+                  Teléfono
+                </label>
+                <input
+                  id="telefono"
+                  type="tel"
+                  className={fieldClasses}
+                  {...register("telefono")}
+                />
+              </div>
+            </div>
+
             <label htmlFor="email" className={labelClasses}>
               Email
             </label>
             <input
               id="email"
               type="email"
-              className={inputClasses}
+              className={fieldClasses}
               {...register("email", {
                 required: "El email es obligatorio",
                 pattern: { value: EMAIL_PATTERN, message: "Email inválido" },
               })}
             />
-            {errors.email && <p className="mt-1 text-xs text-red-400">{errors.email.message}</p>}
-          </div>
+            {errors.email && <p className="-mt-5 mb-5 text-xs text-red-500">{errors.email.message}</p>}
 
-          <div>
             <label htmlFor="servicio" className={labelClasses}>
               Servicio
             </label>
             <select
               id="servicio"
               defaultValue=""
-              className={inputClasses}
+              className={fieldClasses}
               {...register("servicio", { required: "Seleccioná un servicio" })}
             >
               <option value="" disabled>
@@ -167,10 +181,10 @@ export default function Contacto() {
                 </option>
               ))}
             </select>
-            {errors.servicio && <p className="mt-1 text-xs text-red-400">{errors.servicio.message}</p>}
-          </div>
+            {errors.servicio && (
+              <p className="-mt-5 mb-5 text-xs text-red-500">{errors.servicio.message}</p>
+            )}
 
-          <div>
             <label htmlFor="mensaje" className={labelClasses}>
               Mensaje
             </label>
@@ -178,22 +192,24 @@ export default function Contacto() {
               id="mensaje"
               rows={4}
               placeholder="Contanos sobre tu proyecto, ubicación aproximada, superficie estimada..."
-              className={`${inputClasses} min-h-[120px] resize-none`}
+              className={`${fieldClasses} min-h-[100px] resize-none`}
               {...register("mensaje", {
                 required: "El mensaje es obligatorio",
                 minLength: { value: 10, message: "El mensaje debe tener al menos 10 caracteres" },
               })}
             />
-            {errors.mensaje && <p className="mt-1 text-xs text-red-400">{errors.mensaje.message}</p>}
-          </div>
+            {errors.mensaje && (
+              <p className="-mt-5 mb-5 text-xs text-red-500">{errors.mensaje.message}</p>
+            )}
 
-          <button
-            type="submit"
-            className="w-full rounded-sm bg-forma-black py-3 text-xs uppercase tracking-widest text-forma-white transition-opacity hover:opacity-80"
-          >
-            Enviar consulta
-          </button>
-        </motion.form>
+            <button
+              type="submit"
+              className="mt-2 w-full bg-forma-black px-8 py-3 text-[10px] uppercase tracking-[0.2em] text-white transition-opacity hover:opacity-80"
+            >
+              Enviar consulta
+            </button>
+          </motion.form>
+        </div>
       </motion.div>
     </section>
   );
