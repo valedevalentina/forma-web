@@ -9,6 +9,13 @@ type Value = {
   description: string;
 };
 
+const CARD_BORDER_CLASSES = [
+  "",
+  "border-t-[0.5px] md:border-t-0 md:border-l-[0.5px]",
+  "border-t-[0.5px] lg:border-t-0 lg:border-l-[0.5px]",
+  "border-t-[0.5px] md:border-l-[0.5px] lg:border-t-0",
+];
+
 const VALUES: Value[] = [
   {
     numeral: "01",
@@ -55,6 +62,16 @@ export default function Nosotros() {
         visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } },
       };
 
+  const cardsContainerVariants: Variants = shouldReduceMotion
+    ? { hidden: { opacity: 1 }, visible: { opacity: 1 } }
+    : {
+        hidden: { opacity: 0 },
+        visible: {
+          opacity: 1,
+          transition: { duration: 0.7, ease: "easeOut", staggerChildren: 0.1, delayChildren: 0.1 },
+        },
+      };
+
   return (
     <section id="nosotros" className="scroll-mt-16 bg-forma-white px-6 py-24 sm:px-10 lg:px-16">
       <motion.div
@@ -64,51 +81,57 @@ export default function Nosotros() {
         animate={isInView ? "visible" : "hidden"}
         className="max-w-[1440px] mx-auto"
       >
-        <motion.p
-          variants={itemVariants}
-          className="text-[10px] uppercase tracking-[0.2em] text-forma-tan"
-        >
-          Quiénes somos
-        </motion.p>
+        <div className="max-w-3xl">
+          <motion.p
+            variants={itemVariants}
+            className="text-[10px] uppercase tracking-[0.2em] text-forma-tan"
+          >
+            Quiénes somos
+          </motion.p>
 
-        <motion.h2
-          variants={itemVariants}
-          className="mb-16 mt-4 font-serif text-2xl font-normal text-forma-black"
-        >
-          Construir bien es un acto de respeto.
-        </motion.h2>
-
-        <div className="mx-auto grid max-w-5xl grid-cols-1 items-start gap-12 lg:grid-cols-2 lg:gap-20">
-          <motion.div variants={itemVariants} className="aspect-[4/3] bg-[#E0DCD6]" />
-
-          <div>
-            {PARAGRAPHS.map((paragraph, index) => (
-              <motion.p
-                key={index}
-                variants={itemVariants}
-                className="mb-5 text-sm font-light leading-loose text-forma-gray-mid"
-              >
-                {paragraph}
-              </motion.p>
-            ))}
-
-            <motion.div variants={itemVariants}>
-              <div className="my-10 h-px w-8 bg-forma-tan" />
-
-              <div>
-                {VALUES.map((value) => (
-                  <div key={value.numeral} className="border-t border-forma-gray-light py-4">
-                    <p className="mb-1 text-[10px] text-forma-tan">{value.numeral}</p>
-                    <p className="text-sm font-medium text-forma-black">{value.name}</p>
-                    <p className="mt-1 text-xs font-light leading-relaxed text-forma-gray-mid">
-                      {value.description}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
+          <motion.h2
+            variants={itemVariants}
+            className="mb-12 mt-4 font-serif text-3xl font-normal leading-snug text-forma-black sm:text-4xl"
+          >
+            Construir bien es un acto de respeto.
+          </motion.h2>
         </div>
+
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-3 sm:gap-10">
+          {PARAGRAPHS.map((paragraph, index) => (
+            <motion.p
+              key={index}
+              variants={itemVariants}
+              className="text-base font-light leading-loose text-forma-black/70"
+            >
+              {paragraph}
+            </motion.p>
+          ))}
+        </div>
+
+        <motion.div
+          variants={cardsContainerVariants}
+          className="relative mt-16 overflow-hidden sm:mt-20"
+        >
+          <div className="absolute inset-0 bg-[#E0DCD6]" />
+          <div className="absolute inset-0 bg-forma-black/70" />
+
+          <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+            {VALUES.map((value, index) => (
+              <motion.div
+                key={value.numeral}
+                variants={itemVariants}
+                className={`${CARD_BORDER_CLASSES[index]} border-white/20 px-6 py-8`}
+              >
+                <p className="mb-1 text-2xl text-white/20">{value.numeral}</p>
+                <p className="mb-2 font-serif text-sm font-medium text-white">{value.name}</p>
+                <p className="text-xs font-light leading-relaxed text-white/60">
+                  {value.description}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       </motion.div>
     </section>
   );

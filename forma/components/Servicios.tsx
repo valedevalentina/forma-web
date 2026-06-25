@@ -75,14 +75,12 @@ export default function Servicios() {
           Nuestros servicios
         </motion.h2>
 
-        <div>
+        <div className="grid grid-cols-1 gap-x-8 gap-y-0 border-t border-forma-gray-light md:grid-cols-2 lg:grid-cols-3">
           {SERVICES.map((service, index) => (
             <motion.div
               key={service.name}
               variants={itemVariants}
-              className={`flex justify-between items-baseline gap-8 border-t border-forma-gray-light py-5 ${
-                index === SERVICES.length - 1 ? "border-b" : ""
-              }`}
+              className="border-b border-forma-gray-light py-5"
             >
               <div className="flex items-center gap-4">
                 <span className="text-[10px] text-forma-tan">
@@ -91,9 +89,7 @@ export default function Servicios() {
                 <span className="text-sm font-medium text-forma-black">{service.name}</span>
               </div>
 
-              <p className="hidden max-w-xs text-right text-xs font-light text-forma-gray-mid lg:block">
-                {service.description}
-              </p>
+              <p className="mt-2 text-xs font-light text-forma-gray-mid">{service.description}</p>
             </motion.div>
           ))}
         </div>

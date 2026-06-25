@@ -35,7 +35,10 @@ export default function Proyectos() {
       };
 
   return (
-    <section id="proyectos" className="scroll-mt-16 bg-forma-white px-6 py-24 sm:px-10 lg:px-16">
+    <section
+      id="proyectos"
+      className="scroll-mt-16 overflow-x-hidden bg-forma-white px-6 py-24 sm:px-10 lg:px-20"
+    >
       <motion.div
         ref={ref}
         variants={containerVariants}
@@ -62,7 +65,7 @@ export default function Proyectos() {
             <motion.div
               key={project.name}
               variants={itemVariants}
-              className={`group relative overflow-hidden ${
+              className={`group relative h-full w-full overflow-hidden ${
                 index === 0 ? "aspect-[16/9] lg:col-span-2" : "aspect-[4/3]"
               }`}
               style={{ backgroundColor: project.color }}
