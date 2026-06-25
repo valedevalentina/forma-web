@@ -29,9 +29,9 @@ const SERVICE_OPTIONS = ["Casa a medida", "Condominio", "Ampliación", "Remodela
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const fieldClasses =
-  "mb-7 w-full border-b border-forma-gray-light bg-transparent pb-2 text-sm text-forma-black placeholder:text-forma-gray-mid outline-none transition-colors focus:border-forma-black";
+  "w-full border-b border-[#0D0D0D]/20 bg-transparent py-0 text-xs text-forma-black placeholder:text-forma-gray-mid outline-none transition-colors focus:border-forma-black";
 
-const labelClasses = "mb-2 block text-[10px] uppercase tracking-[0.15em] text-forma-tan";
+const labelClasses = "mb-0 block text-[10px] uppercase tracking-widest text-forma-tan";
 
 export default function Contacto() {
   const ref = useRef<HTMLDivElement>(null);
@@ -77,7 +77,7 @@ export default function Contacto() {
   return (
     <section
       id="contacto"
-      className="scroll-mt-16 border-t border-forma-gray-light bg-forma-white px-6 py-24 sm:px-10 lg:px-16"
+      className="scroll-mt-16 border-t border-forma-gray-light bg-forma-white px-6 py-16 sm:px-10 lg:px-16"
     >
       <motion.div
         ref={ref}
@@ -93,25 +93,25 @@ export default function Contacto() {
           Contacto
         </motion.p>
 
-        <motion.h2
-          variants={itemVariants}
-          className="mb-16 mt-4 font-serif text-2xl font-normal text-forma-black"
-        >
-          Hablemos de tu proyecto.
-        </motion.h2>
-
-        <div className="grid grid-cols-1 gap-16 lg:grid-cols-2">
+        <div className="mt-3 grid grid-cols-1 items-start gap-y-16 lg:grid-cols-2 lg:gap-x-20">
           <div>
+            <motion.h2
+              variants={itemVariants}
+              className="font-serif text-2xl font-normal text-forma-black"
+            >
+              Hablemos de tu proyecto.
+            </motion.h2>
+
             <motion.p
               variants={itemVariants}
-              className="mb-10 text-sm font-light leading-loose text-forma-gray-mid"
+              className="mt-2 text-sm font-light leading-loose text-forma-gray-mid"
             >
               Respondemos todas las consultas dentro de las 24 horas. Sin compromiso y sin costo.
             </motion.p>
 
-            <motion.div variants={itemVariants}>
+            <motion.div variants={itemVariants} className="mt-4">
               {CONTACT_ITEMS.map(({ icon: Icon, text }) => (
-                <div key={text} className="mb-4 flex items-center gap-3">
+                <div key={text} className="mb-3 flex items-center gap-3">
                   <Icon size={14} className="text-forma-tan" />
                   <p className="text-sm text-forma-black">{text}</p>
                 </div>
@@ -119,92 +119,106 @@ export default function Contacto() {
             </motion.div>
           </div>
 
-          <motion.form variants={itemVariants} onSubmit={handleSubmit(onSubmit)}>
-            <div className="grid grid-cols-2 gap-8">
+          <motion.form
+            variants={itemVariants}
+            onSubmit={handleSubmit(onSubmit)}
+            className="w-full max-h-[220px]"
+          >
+            <div className="space-y-2">
+              <div className="grid grid-cols-2 gap-8">
+                <div>
+                  <label htmlFor="nombre" className={labelClasses}>
+                    Nombre
+                  </label>
+                  <input
+                    id="nombre"
+                    type="text"
+                    className={`${fieldClasses} h-5`}
+                    {...register("nombre", { required: "El nombre es obligatorio" })}
+                  />
+                  {errors.nombre && (
+                    <p className="mt-0.5 text-[10px] text-red-500">{errors.nombre.message}</p>
+                  )}
+                </div>
+
+                <div>
+                  <label htmlFor="telefono" className={labelClasses}>
+                    Teléfono
+                  </label>
+                  <input
+                    id="telefono"
+                    type="tel"
+                    className={`${fieldClasses} h-5`}
+                    {...register("telefono")}
+                  />
+                </div>
+              </div>
+
               <div>
-                <label htmlFor="nombre" className={labelClasses}>
-                  Nombre
+                <label htmlFor="email" className={labelClasses}>
+                  Email
                 </label>
                 <input
-                  id="nombre"
-                  type="text"
-                  className={fieldClasses}
-                  {...register("nombre", { required: "El nombre es obligatorio" })}
+                  id="email"
+                  type="email"
+                  className={`${fieldClasses} h-5`}
+                  {...register("email", {
+                    required: "El email es obligatorio",
+                    pattern: { value: EMAIL_PATTERN, message: "Email inválido" },
+                  })}
                 />
-                {errors.nombre && (
-                  <p className="-mt-5 mb-5 text-xs text-red-500">{errors.nombre.message}</p>
+                {errors.email && (
+                  <p className="mt-0.5 text-[10px] text-red-500">{errors.email.message}</p>
                 )}
               </div>
 
               <div>
-                <label htmlFor="telefono" className={labelClasses}>
-                  Teléfono
+                <label htmlFor="servicio" className={labelClasses}>
+                  Servicio
                 </label>
-                <input
-                  id="telefono"
-                  type="tel"
-                  className={fieldClasses}
-                  {...register("telefono")}
+                <select
+                  id="servicio"
+                  defaultValue=""
+                  className={`${fieldClasses} h-5`}
+                  {...register("servicio", { required: "Seleccioná un servicio" })}
+                >
+                  <option value="" disabled>
+                    Seleccioná un servicio
+                  </option>
+                  {SERVICE_OPTIONS.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+                {errors.servicio && (
+                  <p className="mt-0.5 text-[10px] text-red-500">{errors.servicio.message}</p>
+                )}
+              </div>
+
+              <div>
+                <label htmlFor="mensaje" className={labelClasses}>
+                  Mensaje
+                </label>
+                <textarea
+                  id="mensaje"
+                  rows={2}
+                  placeholder="Contanos sobre tu proyecto, ubicación aproximada, superficie estimada..."
+                  className={`${fieldClasses} h-8 resize-none`}
+                  {...register("mensaje", {
+                    required: "El mensaje es obligatorio",
+                    minLength: { value: 10, message: "El mensaje debe tener al menos 10 caracteres" },
+                  })}
                 />
+                {errors.mensaje && (
+                  <p className="mt-0.5 text-[10px] text-red-500">{errors.mensaje.message}</p>
+                )}
               </div>
             </div>
 
-            <label htmlFor="email" className={labelClasses}>
-              Email
-            </label>
-            <input
-              id="email"
-              type="email"
-              className={fieldClasses}
-              {...register("email", {
-                required: "El email es obligatorio",
-                pattern: { value: EMAIL_PATTERN, message: "Email inválido" },
-              })}
-            />
-            {errors.email && <p className="-mt-5 mb-5 text-xs text-red-500">{errors.email.message}</p>}
-
-            <label htmlFor="servicio" className={labelClasses}>
-              Servicio
-            </label>
-            <select
-              id="servicio"
-              defaultValue=""
-              className={fieldClasses}
-              {...register("servicio", { required: "Seleccioná un servicio" })}
-            >
-              <option value="" disabled>
-                Seleccioná un servicio
-              </option>
-              {SERVICE_OPTIONS.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
-            {errors.servicio && (
-              <p className="-mt-5 mb-5 text-xs text-red-500">{errors.servicio.message}</p>
-            )}
-
-            <label htmlFor="mensaje" className={labelClasses}>
-              Mensaje
-            </label>
-            <textarea
-              id="mensaje"
-              rows={4}
-              placeholder="Contanos sobre tu proyecto, ubicación aproximada, superficie estimada..."
-              className={`${fieldClasses} min-h-[100px] resize-none`}
-              {...register("mensaje", {
-                required: "El mensaje es obligatorio",
-                minLength: { value: 10, message: "El mensaje debe tener al menos 10 caracteres" },
-              })}
-            />
-            {errors.mensaje && (
-              <p className="-mt-5 mb-5 text-xs text-red-500">{errors.mensaje.message}</p>
-            )}
-
             <button
               type="submit"
-              className="mt-2 w-full bg-forma-black px-8 py-3 text-[10px] uppercase tracking-[0.2em] text-white transition-opacity hover:opacity-80"
+              className="mt-2 w-full bg-forma-black px-8 py-1.5 text-[10px] uppercase tracking-widest text-white transition-opacity hover:opacity-80"
             >
               Enviar consulta
             </button>
